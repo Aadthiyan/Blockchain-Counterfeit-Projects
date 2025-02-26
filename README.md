@@ -12,6 +12,8 @@ This project provides a **blockchain-based full-stack web application** to comba
 - Each product is assigned a **unique QR code** that links to an immutable **Ethereum blockchain entry**.  
 - The system captures **product origin, transaction timestamps, and owner details**, ensuring authenticity.  
 
+![Manufacturer Dashboard](Images/Manufacturer.jpeg)
+
 ### **📦 Supply Chain Tracking (Intermediaries)**  
 - Distributors and retailers log in using their **Metamask wallet** to verify and update product details.  
 - The system tracks the product’s journey, recording every transaction on the blockchain.  
@@ -20,7 +22,9 @@ This project provides a **blockchain-based full-stack web application** to comba
 ### **🔍 Consumer Verification via Mobile App**  
 - Consumers scan the **QR code** using the mobile app to retrieve the product’s entire transaction history.  
 - The app provides **real-time authenticity checks** by cross-referencing blockchain records.  
-- If inconsistencies are detected, users can report counterfeit activity directly through the app.  
+- If inconsistencies are detected, users can report counterfeit activity directly through the app.
+
+  ![Cousumer Verification App](Images/Product_Verification.jpeg)
 
 ### **🔗 Blockchain Integration (Ethereum & Smart Contracts)**  
 - **Ethereum Smart Contracts** store product data immutably.  
@@ -30,7 +34,9 @@ This project provides a **blockchain-based full-stack web application** to comba
 ### **🔑 Metamask Authentication**  
 - **Metamask is required** for all users (manufacturers, intermediaries, consumers) to interact with the blockchain.  
 - Users sign transactions securely using their **private keys**.  
-- Ensures **decentralized identity verification** without relying on traditional login systems.  
+- Ensures **decentralized identity verification** without relying on traditional login systems.
+
+  ![Metamask Authentication](Images/Metamask_wallet.jpeg)
 
 ---
 
