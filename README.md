@@ -11,27 +11,27 @@ This project is a **full-stack web application** that streamlines doctor appoint
 ### **📅 Doctor Appointment Scheduling**  
 Patients can seamlessly book doctor appointments through an intuitive web interface. The system optimizes appointment slots based on doctor availability, minimizing wait times and maximizing efficiency. Upon successful booking, the appointment details are stored in a **SQL-based database**, ensuring secure and organized data management.  
 
-![Appointment Booking](Images/)
+![Appointment Booking](Images/Appointment_Booking.jpg)
 
 ### **🩺 Multi-Disease Prediction**  
 The system uses **Machine Learning (Random Forest Classifier)** to predict diseases such as **Diabetes, Heart Disease, and Parkinson’s** based on patient symptoms. Users can input their symptoms, and the model provides an accurate probability score for each disease, aiding early diagnosis and medical intervention.  
 
-![Multi-Disease Prediction](Images/)
+![Multi-Disease Prediction](Images/Multidisease_Prediction.jpg)
 
 ### **💬 Chatbot Integration**  
 A built-in chatbot assists users by collecting symptom inputs and mapping them to potential health conditions. The chatbot provides preliminary healthcare suggestions and connects patients with the most relevant doctors, improving accessibility to medical advice.  
 
-![Chatbot](Images/)
+![Chatbot](Images/Chatbot.jpg)
 
 ### **💊 Alternative Medicine Recommendations**  
 For patients with allergies or side effects from prescribed medications, the system suggests suitable **alternative medicines**. This feature is designed to provide safe and effective options, ensuring continued treatment without adverse reactions.  
 
-![Alternative Medicine Recommendation](Images/)
+![Alternative Medicine Recommendation](Images/Alternate_medicine.jpg)
 
 ### **📩 Email Notification System**  
 The system sends **automated confirmation emails** upon successful appointment bookings, including details such as the doctor’s name, appointment date, and consultation location. It also sends **reminder emails** before the scheduled appointment to reduce no-show rates and improve patient compliance.  
 
-![Email Notification](Images/)
+![Email Notification](Images/Email_notification.jpg)
 
 ## 🔧 Full-Stack Technologies Used  
 
