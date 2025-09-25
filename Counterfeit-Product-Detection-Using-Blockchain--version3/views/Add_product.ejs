@@ -393,7 +393,33 @@ div.content {
 				// Handle any errors that occur during the request
 			});
 
-			await window.ethereum.enable();
+            if (!window.ethereum) {
+                alert('MetaMask not detected. Please install/enable MetaMask and try again.');
+                return;
+            }
+            // Ensure Sepolia network
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0xaa36a7' }]
+                });
+            } catch (switchError) {
+                if (switchError && switchError.code === 4902) {
+                    await window.ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{
+                            chainId: '0xaa36a7',
+                            chainName: 'Sepolia',
+                            //rpcUrls: ['https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID'],
+                            blockExplorerUrls: ['https://sepolia.etherscan.io'],
+                            nativeCurrency: { name: 'SepoliaETH', symbol: 'SEP', decimals: 18 }
+                        }]
+                    });
+                } else {
+                    throw switchError;
+                }
+            }
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
 			const accounts = await web3.eth.getAccounts();
 			const gasPrice = await web3.eth.getGasPrice();
 			const gasLimit = 400000;
@@ -407,12 +433,26 @@ div.content {
 			// window.location.replace("/items");
 
 
-			var url = "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=" +
-			pid;
+			function generateProductId() {
+    			return Math.floor(100 + Math.random() * 900).toString(); // 100–999
+  			}
 
-			var ifr = `<iframe src="${url}" height="200" width="200"></iframe>`;
+  			// Generate product ID for this product
+  			var productId = generateProductId();
 
-			document.getElementById('qrcode').innerHTML = ifr;
+ 			 // Optionally: you could encrypt or hash it here for more security
+  			// For now, we put productId directly into QR for distributor scanning
+  			var qrData = productId;
+
+  			// Use working QR API (Google Chart API is deprecated)
+  			var url = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(qrData);
+
+  			// Inject QR as image into page
+  			var img = `<img src="${url}" height="200" width="200" alt="QR Code">`;
+  			document.getElementById('qrcode').innerHTML = img;
+
+  			// For debugging: log the generated product ID
+  			console.log("Generated Product ID:", productId);
 
 			// var a = document.createElement('a');
 			// var a = document.createElement('a');

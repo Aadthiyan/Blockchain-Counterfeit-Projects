@@ -37,7 +37,7 @@
         <a href="logout">Logout</a>
       </div>
       <div class="topnav">
-        <a href="#FakeProduct">Products Manufactured by: <%=name%></a>
+        <a href="#FakeProduct">Products Manufactured by <%=name%></a>
       </div>
 
 
@@ -70,7 +70,7 @@
   </style>
 </head>
 <body>
-  <table id="myTable" style="margin-left: 280px;margin-top: 50px;color: white;">
+  <table id="myTable" style="margin-left: 280px;margin-top: 50px;color: rgb(165, 238, 18);">
     <thead>
       <tr>
         <th style="color: black;">Name</th>
@@ -323,7 +323,33 @@
                 const pid=productid.value;
              
                 try {
-                    await window.ethereum.enable();
+                    if (!window.ethereum) {
+                        alert('MetaMask not detected. Please install/enable MetaMask and try again.');
+                        return;
+                    }
+                    // Ensure Sepolia network
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0xaa36a7' }]
+                        });
+                    } catch (switchError) {
+                        if (switchError && switchError.code === 4902) {
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [{
+                                    chainId: '0xaa36a7',
+                                    chainName: 'Sepolia',
+                                    //rpcUrls: ['https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID'],
+                                    blockExplorerUrls: ['https://sepolia.etherscan.io'],
+                                    nativeCurrency: { name: 'SepoliaETH', symbol: 'SEP', decimals: 18 }
+                                }]
+                            });
+                        } else {
+                            throw switchError;
+                        }
+                    }
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
                     const accounts = await web3.eth.getAccounts();
                     const gasPrice = await web3.eth.getGasPrice();
                     const gasLimit = 400000;

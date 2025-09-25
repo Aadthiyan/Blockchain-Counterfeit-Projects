@@ -93,7 +93,25 @@ Router.post('/index', async (req, res) => {
     res.render('index')
   } catch (error) {
     console.error(error)
-    res.status(500).send('Internal Server Error')
+    if (error.code === 11000) {
+      // Handle duplicate key error
+      if (error.keyPattern && error.keyPattern.pid) {
+        // Drop the problematic index
+        await userSchema.collection.dropIndex({ pid: 1 }).catch(console.log)
+        // Retry the save
+        try {
+          await newUser.save()
+          res.render('index')
+        } catch (retryError) {
+          console.error('Retry failed:', retryError)
+          res.status(500).send('Registration failed. Please try again.')
+        }
+      } else {
+        res.status(500).send('Username already exists. Please choose a different username.')
+      }
+    } else {
+      res.status(500).send('Internal Server Error')
+    }
   }
 })
 

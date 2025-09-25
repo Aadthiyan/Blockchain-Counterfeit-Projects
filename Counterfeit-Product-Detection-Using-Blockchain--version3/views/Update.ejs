@@ -275,7 +275,33 @@
             
                 
                 try {
-                    await window.ethereum.enable();
+                    if (!window.ethereum) {
+                        alert('MetaMask not detected. Please install/enable MetaMask and try again.');
+                        return;
+                    }
+                    // Ensure Sepolia network
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0xaa36a7' }]
+                        });
+                    } catch (switchError) {
+                        if (switchError && switchError.code === 4902) {
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [{
+                                    chainId: '0xaa36a7',
+                                    chainName: 'Sepolia',
+                                    //rpcUrls: ['https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID'],
+                                    blockExplorerUrls: ['https://sepolia.etherscan.io'],
+                                    nativeCurrency: { name: 'SepoliaETH', symbol: 'SEP', decimals: 18 }
+                                }]
+                            });
+                        } else {
+                            throw switchError;
+                        }
+                    }
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
                     const accounts = await web3.eth.getAccounts();
                     const gasPrice = await web3.eth.getGasPrice();
                     const gasLimit = 400000;
@@ -287,12 +313,12 @@
                     console.log('Transaction receipt:', result);
                     alert('Transaction added to blockchain sucessfully!');
 
-                    var url = "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=" +
-			        pid;
+                    //var url = "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=" +
+			        //pid;
 
-			        var ifr = `<iframe src="${url}" height="200" width="200"></iframe>`;
+			        //var ifr = `<iframe src="${url}" height="200" width="200"></iframe>`;
 
-			        document.getElementById('qrcode').innerHTML = ifr;
+			        //document.getElementById('qrcode').innerHTML = ifr;
                 } catch (error) {
                     console.error('Transaction error:', error);
                     alert('Error adding name: ' + error.message);
